@@ -1,0 +1,16 @@
+#!/bin/bash
+# Use as: strip_dump dump.file ATOM_ID output.csv
+
+echo "Stripping unneeded lines..."
+sed -n "/^$2 /p" "$1" > temp_atom_data
+echo "Removing ATOM_ID..."
+sed "s/$2 //g" temp_atom_data > temp_atom_data2
+head -n -1 temp_atom_data2 > temp_atom_data
+echo "Removing spaces and adding commas..."
+sed -e 's/ $//1' < temp_atom_data > temp_atom_data2
+sed -e 's/ /,/g' < temp_atom_data2 > temp_atom_data
+echo "Adding column titles and saving..."
+sed  '1s/^/X, Y, Z, time, msd\n/' < temp_atom_data > "$3"
+echo "Deleting temp files..."
+rm temp_atom_data temp_atom_data2
+echo "Done."

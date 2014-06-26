@@ -1,0 +1,38 @@
+# Simulation of a single atom on surface
+
+units metal
+dimension 3
+boundary s s s
+units metal
+atom_style atomic
+neighbor 2.0 nsq
+#neigh_modify delay 0 every 1 check yes
+
+region	mybox block -10 10 -10 10 -0.5 10
+create_box 1 mybox
+
+create_atoms 1 single -5 0 5 
+create_atoms 1 single 5 0 5
+
+# define  potentials
+pair_style eam/alloy 
+pair_coeff * * Pt-Au.eam.alloy Au
+
+# initial velocities
+velocity all create 300 482748
+
+# fixes
+fix 1 all nvt temp 300 300 100
+#fix wall all wall/region mybox lj93 .5 .5 1 
+
+# Log Output
+thermo 200
+thermo_style custom step temp ke pe
+#thermo_modify lost warn
+
+# Image Output
+dump 1 all atom 20 dump.lammpstrj 
+
+# Run simulation
+timestep 0.002
+run 10000

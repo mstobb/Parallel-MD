@@ -1,0 +1,12 @@
+# Ignore log files
+log.*
+# 
+# Ignore editor temp files
+*~
+*.pdf
+*.png
+dump*
+log.*
+*.out
+*_out
+

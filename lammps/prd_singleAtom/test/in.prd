@@ -1,0 +1,77 @@
+# single atom on block of gold
+units metal
+atom_modify map array
+dimension 3
+boundary s s s
+units metal
+atom_style atomic
+neighbor 2.0 bin
+neigh_modify delay 0 every 1 check yes
+atom_modify sort 0 0 
+
+
+
+read_data dimension.lmp
+
+
+#create atoms
+lattice fcc 4.0788 orient x 1 0 0  orient y 0 1 0 orient z 0 0 1
+region rsub block  25 75 25 75 0 20 units box
+region rbot block 25 75 25 75 0 3 units box
+region abov1 block  49 51 49 51 19 23 units box
+create_atoms 1 region rsub
+create_atoms 1 region abov1
+
+# temperature
+
+variable t equal 350
+
+# Displacement Distance needed for event
+
+variable dist equal 2.0
+
+# minimization parameters
+
+variable etol equal 1.0e-5
+variable ftol equal 1.0e-5
+variable maxiter equal 100
+variable maxeval equal 100
+variable dmax equal 1.0e-1
+
+# define  potentials
+pair_style eam/alloy 
+pair_coeff * * Pt-Au.eam.alloy Au
+
+# define groups
+group mobile region rsub
+group single region abov1
+group bottom region rbot
+
+# initial velocities
+#velocity all create $t 482748
+
+# fixes
+fix 1 all nvt temp $t $t 1
+fix 2 bottom setforce 0.0 0.0 0.0
+
+compute msd_abov single displace/atom
+
+timestep 0.001
+thermo 200
+thermo_style custom step temp ke pe
+thermo_modify lost warn
+neighbor        1.0 bin
+neigh_modify    every 1 delay 10 check yes
+
+# Run to equilibrate
+run 100
+
+dump 1 all custom 80 dump.lammpstrj id xs ys zs c_msd_abov[4]
+#dump_modify 1 scale no
+
+compute disp_single single event/displace ${dist}
+
+prd  18000 1800 100 100 1800 disp_single 54985 temp $t min ${etol} ${ftol} ${maxiter} ${maxeval} vel all gaussian
+
+#prd 7200 1800 100 100 1800 disp_single 12397 temp 300 min 0.1 0.1 100 100 vel all gaussian
+

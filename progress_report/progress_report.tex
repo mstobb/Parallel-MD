@@ -1,0 +1,193 @@
+\documentclass[12pt]{article}
+
+% packages
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}
+\usepackage{fullpage}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{psfrag}
+\usepackage{fancyhdr}
+\usepackage[top=1in, bottom=1in, left=.5in, right=.5in]{geometry}
+\usepackage[font = sf, margin=2.5cm]{caption}
+\usepackage{subcaption}
+
+\setlength{\voffset}{-0.25in}
+\setlength{\headsep}{15pt}
+\setlength{\itemsep}{-10pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{14pt}
+\setlength{\headheight}{15pt}
+\pdfminorversion=5
+
+% MY COMMANDS!!!!!!!
+\newcommand{\p}{\partial}
+\newcommand{\f}{\frac}
+\newcommand{\gives}{\quad \Rightarrow \quad}
+\newcommand{\qq}{\qquad}
+\newcommand{\tand}{\qquad \text{and} \qquad}
+
+
+
+
+% Beginning of Document
+
+\title{Summer 2014 Research Project \\ Progress Report}
+\author{Michael T. Stobb}
+%\date{April 30th, 2014}
+
+\pagestyle{fancy}
+
+\begin{document}
+
+\lhead{Summer 2014 \hfill  {\it Progress Report}  \hfill  \textbf{Michael T. Stobb} }
+%\chead{{\bf Michael T. Stobb}
+%\rhead{}
+
+\onehalfspacing
+
+\maketitle
+
+\begin{itemize}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Entry 1  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item[4/3/14)] Dr. Martini and I met together to discuss some of the broad desires for the summer project.  These desires, roughly, are to speed up the execution of the Atomic Friction Model she runs.  Currently, the model can be parallelized separately in space and time.  What would be beneficial would be to parallelize it in both.  
+
+We ended with Dr. Martini giving me a review paper to read about atomic friction, just so that I can understand the basics of the physical system she is working with.
+
+
+\item[$^*$4/21/14)] Group meeting with Dean Meza, Dr. Martini, and Dr. Leiderman to discuss the goals for the summer.  What follows is a transcription of my notes taken during the meeting.
+
+\begin{itemize}
+ \item point 1
+ \item point 2
+\end{itemize}
+
+Later after meeting, Dr. Martini follows through and begins the process of getting me access to the Conte cluster at Purdue.
+
+
+\item[4/30/14)] Full account access to Conte Cluster at Purdue.
+
+
+\item[5/7/14)] Meeting with Dr. Martini and her Graduate Student Zhijiang Ye (Justin), who works with her on Atomic Friction.  Justin agrees to send me the lammps input file for a block of gold melting.  This script is to be the basis of our future toy model.
+
+\item[6/3/14)] Meeting with Dr. Martini and Justin.  We layout the following short term research plan:
+
+\begin{itemize}
+ \item Create a simple diffusion model composed of a single atom on a surface of like atoms.  The lone atom on top should transition rarely from one potential to another.  Using this, determine the displacement of the transition and the time to transition, both of which will be used later when doing the parallel replicas.
+ \item Parallelize in space.  Lammps should make this easy.
+ \item Parallelize in time using parallel replicas.  
+ \item Parallelize in both space and time.
+\end{itemize}
+
+At first, Dr. Martini was going to have Justin construct the first model, then allow me to modify it for parallelization, but I requested the task for myself.  This way I could better learn the Lammps system.
+
+\item[6/9/14)] Meeting with Justin to correct some code mistakes.  I was trying to heat a single atom only, while keeping the block of gold rigid.  Lammps does not let this happen (kicks out ERROR: Attempting to rescale a 0.0 temperature).  Justin reasoned that if heating a single atom was problamtic, heat two then only track one of them.  Problem solved in about 5 minutes.
+
+\item[6/12/14)] Correspondence with Dr. Martini.  My update to her was as follows:
+
+\begin{quote}
+ I don't think it's possible to work with a single atom in a group (I did discuss this with Justin).  You can have a single atom in a group, but then you can't assign it a velocity (an error is kicked back saying you can't scale a 0 temperature).  So Justin's idea was to use 2 atoms in the group.  This indeed worked out.  With two atoms in the group, I can correctly assign a velocity and see the atoms (now two of them) bounce around on a surface.  This is what I got working on Monday.  
+
+But now since there are two atoms, the mean squared displacement is less desirable to work with, so we have to look at just the actual total displacement of each atom.  This isn't too hard to calculate (but now we have to sift through the dump file itself).   I then tracked when a atom made a transition and found that the displacement was approximately 2 scaled units and occurred in approximately 2 seconds (which seems really slow to me).  
+
+Running the model with spatial parallelization is pretty simple, I just pass it to mpi and tell it how many cores to run it on and lammps does the spatial decomposition (is this correct?).  Doing this on my home machine, I see a very nice speed increase (which has 4 cores).  I'll be tweaking my input script and running it on the cluster today to see how things scale.
+
+Next, I'll be working on the replicas.  I was reading the manual last night and it seems very straightforward, but I'll ask Justin if I run into any problems.
+\end{quote}
+
+Later that day, I wrote a bash script which manually pulls out the relevant data from the lammps dump file so that plots can be made.  Using this, I was able to create the graph in Figure~\ref{msd_rand}.
+
+\begin{figure}
+\begin{center}
+ \includegraphics[scale=.5]{figures/single_atom_msd}
+ \caption{The squared displacement of a single atom being heated to roughly 1,000K while gold block surface is kept perfectly rigid.  Note: this is physically ridiculous.}
+ \label{msd_rand}
+ \end{center}
+\end{figure}
+
+
+\item[6/17/14)] Meeting with Dr. Martini.  We discuss a better system to use rather than the rigid gold surface.  Her idea is to just heat the entire system, gold surface and atom on top, the same.  If the structure is locked into the crystalline structure tight enough, then low temperature heating shouldn't break it up.  This then avoids the physically ridiculous situation and might also simplify the code.
+
+\item[6/19/14)] Correspondence with Dr. Martini.  My update to her was as follows:
+
+\begin{quote}
+ So, I went ahead and implemented what we discussed the other day.  Just heat all the atoms the same.  This lets us have the single atom on the surface (as we originally desired), so tracking gets a lot easier.  Unfortunately, I'm not sure a trackable transition will occur.  
+
+At lower temperatures (less than 400), the single atom just sits on the surface without much movement (the whole surface is moving with it), even running it to 100,000 time steps.  Increasing the temperature melts the block and the single atom on the surface melts into it.  Interestingly, with higher heat, I also see the entire system beginning to rotate (I'm guessing it has something to do with adding heat to the block).  This makes tracking the individual atoms displacement more difficult as it now has a constant displacement due to the rotation.  Could all this be caused by me using the wrong potential?  All my atoms are gold and I'm using the potential file that Justin supplied me for a gold block, but perhaps I should be using something different.
+
+So, in the process of trying all of this I realized I had been before keeping the block completely rigid (I was not heating it as I had thought), which besides having to have two atoms on the surface and being completely physically unbelievable, gave results about what we were expecting.  My question though is, if this is just a toy model to go about asking a more difficult question, why must it be physically real?  If all we want to do is create a system that has "rare" transition events and can be spatially parallized, then keeping the surface completely rigid might not be so bad.
+\end{quote}
+
+In her response, she reminds me of the fix setforce command, which can be used to zero out the velocity of certain atoms.  Doing this to a bottom layer will keep the block from rotating and simulate the block as a member of a bulk piece of gold.  This turns out to fix most of the problems I was having with melting as well.  Doing an initial test of this new system at 300K generated the plot in Figure~\ref{300K_wrong}.
+
+\begin{figure}
+\begin{center}
+ \includegraphics[scale=.5]{figures/300K_transition}
+ \caption{The squared displacement of a single atom while atom and entire block are heated to 300K.}
+ \label{300K_wrong}
+ \end{center}
+\end{figure}
+
+
+\item[6/23/14)] Correspondence with Dr. Martini.  I communicate the rough parameter values I've found that will be needed to compute the PRD.  I found these to be roughly
+
+\begin{quote}
+timestep interval between events: 1800 \hfill \\
+timestep interval between correlated events: 1800 \hfill \\
+Scaled unit displacement needed to detect events: 2.00 \hfill
+\end{quote}
+
+Additionally, I finalized my temperature search and created the graph seen in Figure~\ref{temp_trans} for Dr. Martini.  From this, we selected 350K to be the temperature we should run our model at, as upon closer inspection of the 350K trial run, we see a single and very clear transition (Figure~\ref{350K_right}).  
+
+\begin{figure}
+\begin{center}
+ \includegraphics[scale=.5]{figures/temp_trans}
+ \caption{Plot of transitions per 100,000 time steps vs temperature of system.}
+ \label{temp_trans}
+ \end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+ \includegraphics[scale=.5]{figures/350K_transition}
+ \caption{The squared displacement of a single atom while atom and entire block are heated to 350K.}
+ \label{350K_right}
+ \end{center}
+\end{figure}
+
+I tried and failed to get the PRD up and running on my own.  I passed my code to Justin in hopes that he might see what exactly I was doing wrong.
+
+
+\item[6/24/14)]  Correspondence with Justin.  He finds no real problems with my code and believes that the lammps version I am using doesn't properly support the PRD command.  However, when I later used his recommended version of lammps, I still received many errors from MPI.  Justin then sends me his exact code that he ran (which contains only two lines that are different from my code) for me to run myself.  Strangely, it works without problems.  A meeting with Justin was scheduled for later in the week to discuss what could possibly be going on.  
+
+Additionally, Justin will help me fine tune the PRD command itself, as apprently it is more art than science to get it working correctly.
+
+\item[$^*$6/26/14)] Meeting with Dean Meza and Dr. Leiderman to discuss progress so far, which they both feel to be satisfactory.  Future expectations are stated to include clear goals, clear deadlines, and clear communication.  The last being inadiquate up till now.  Things to work on were stated as follows:
+
+\begin{itemize}
+ \item Produce speed up for spatial parallelization
+ \item Check whether lammps uses OpenMP, MPI, or both
+ \item Determine a way to validate our solution when running PRD
+ \item Read up on the Partition command in lammps.  What exactly is it doing?
+ \item Determine the number of layers in simulation
+ \item Should we zero out atoms on sides of block as well as the bottom?
+\end{itemize}
+
+
+
+
+
+\end{itemize}
+
+%\section*{Appendix}
+
+\end{document}

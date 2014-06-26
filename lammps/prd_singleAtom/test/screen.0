@@ -1,0 +1,203 @@
+LAMMPS (29 Jul 2013)
+Processor partition = 0
+Reading data file ...
+  orthogonal box = (-100 -100 -100) to (100 100 100)
+  1 by 1 by 1 MPI processor grid
+Lattice spacing in x,y,z = 4.0788 4.0788 4.0788
+Created 2880 atoms
+Created 1 atoms
+2880 atoms in group mobile
+1 atoms in group single
+576 atoms in group bottom
+Setting up run ...
+Memory usage per processor = 2.39464 Mbytes
+Step Temp KinEng PotEng 
+       0            0            0   -10759.138 
+     100    75.469304    28.094899       -10787 
+Loop time of 0.508832 on 1 procs for 100 steps with 2881 atoms
+
+Pair  time (%) = 0.495136 (97.3083)
+Neigh time (%) = 0 (0)
+Comm  time (%) = 3.93391e-05 (0.00773125)
+Outpt time (%) = 1.50204e-05 (0.00295193)
+Other time (%) = 0.0136418 (2.68101)
+
+Nlocal:    2881 ave 2881 max 2881 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:    0 ave 0 max 0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:    89267 ave 89267 max 89267 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 89267
+Ave neighs/atom = 30.9847
+Neighbor list builds = 0
+Dangerous builds = 0
+WARNING: Resetting reneighboring criteria during PRD (../prd.cpp:201)
+Setting up minimization ...
+Memory usage per processor = 3.57731 Mbytes
+Step Temp KinEng PotEng 
+     100    75.469304    28.094899       -10787 
+     118    75.469304    28.094899   -10807.989 
+Loop time of 0.266984 on 1 procs for 18 steps with 2881 atoms
+Setting up run ...
+Memory usage per processor = 3.34845 Mbytes
+Step Temp KinEng PotEng 
+     100    75.469304    28.094899       -10787 
+     200    158.90167      59.1542   -10665.914 
+     400    347.28728    129.28436   -10494.681 
+     600    370.64377    137.97927   -10290.693 
+     800    357.51284    133.09103   -9999.5067 
+    1000    362.83715     135.0731   -9188.7182 
+    1200    363.13527    135.18408   -8946.2502 
+    1400    357.77036    133.18689   -8160.5945 
+    1600    356.19915    132.60198   -6832.2826 
+    1800    369.92556     137.7119   -6438.8199 
+    2000    358.29407    133.38185    -5314.532 
+    2200    363.38503    135.27706    -3183.604 
+    2400    362.89192    135.09349   -2821.1289 
+    2600    370.67045     137.9892   -1371.3181 
+    2800    361.00552    134.39124    271.41846 
+    3000    369.36296    137.50246    1093.3872 
+    3200     368.2021    137.07031    1787.7063 
+    3400    369.50695    137.55606    3546.2571 
+    3600    370.61015    137.96675     3545.244 
+    3800    359.18741    133.71441    4997.4975 
+    4000    371.98102    138.47708    5132.8489 
+    4200    365.62401    136.11057    4858.2507 
+    4400    373.47851    139.03455    6873.9709 
+    4600    362.18417    134.83002    7175.6825 
+    4800    363.48546    135.31445    7506.4671 
+    5000    377.35969     140.4794     8706.498 
+    5200    360.53406    134.21573    8671.2627 
+    5400    372.73046    138.75608    9405.7799 
+    5600    376.00571    139.97535    9217.8582 
+    5800    370.53856     137.9401    10331.867 
+    6000    376.01742    139.97971    15496.924 
+    6200    363.50741    135.32262    13981.716 
+    6400    367.52608    136.81865    12322.996 
+    6600    363.54816    135.33779    14363.394 
+    6800    369.78086    137.65803    14102.864 
+    7000    364.34319    135.63375    13542.128 
+    7200    371.91562    138.45274     13700.52 
+    7300     365.5682    136.08979    12925.212 
+Loop time of 38.4114 on 1 procs for 10000 steps with 2881 atoms
+Setting up run ...
+Memory usage per processor = 3.35414 Mbytes
+Step Temp KinEng PotEng 
+     100    366.65705    136.49513     12836.57 
+     200    401.63735    149.51722    12546.412 
+     400     432.4262    160.97896     16268.61 
+     600    469.37811    174.73502    16968.306 
+     800    497.71719    185.28479    15585.184 
+    1000    517.68438    192.71796     11557.89 
+    1200    527.81715    196.49008    11052.993 
+    1400    552.77733    205.78198    8896.1377 
+    1600    562.89009    209.54665    5244.4252 
+    1800    569.55272    212.02695    4315.2341 
+Loop time of 6.73587 on 1 procs for 1800 steps with 2881 atoms
+Setting up minimization ...
+Memory usage per processor = 4.0458 Mbytes
+Step Temp KinEng PotEng 
+    1900    568.31867    211.56755    4329.4542 
+    1985    568.31867    211.56755    4083.5966 
+Loop time of 0.429607 on 1 procs for 85 steps with 2881 atoms
+Setting up run ...
+Memory usage per processor = 3.35909 Mbytes
+Step Temp KinEng PotEng 
+    1900    568.31867    211.56755    4329.4542 
+    2000    583.03862    217.04733    4491.0818 
+    2200    606.07168    225.62183    5338.3198 
+    2400    602.07852     224.1353    5502.7211 
+    2600    623.07919     231.9532    4296.6108 
+    2800    635.46215      236.563    2701.1789 
+    3000    624.33904    232.42221    1869.5512 
+    3200    627.97972    233.77752    2143.7981 
+    3400     633.1879    235.71636    2323.4104 
+    3600    649.84358    241.91676    1901.7592 
+Loop time of 6.44524 on 1 procs for 1800 steps with 2881 atoms
+Setting up minimization ...
+Memory usage per processor = 4.055 Mbytes
+Step Temp KinEng PotEng 
+    3700    635.51451    236.58249    1809.6689 
+    3791    635.51451    236.58249    1509.8838 
+Loop time of 0.433966 on 1 procs for 91 steps with 2881 atoms
+Setting up run ...
+Memory usage per processor = 3.36828 Mbytes
+Step Temp KinEng PotEng 
+    3700    635.51451    236.58249    1809.6689 
+    3800      654.879    243.79129     1825.023 
+    4000    651.98323    242.71329    1531.4274 
+    4200    648.03092    241.24196    977.34597 
+    4400    629.46752    234.33138    714.09913 
+    4600    629.18451    234.22603    686.88967 
+    4800    635.89937    236.72576    448.83566 
+    5000    635.80141    236.68929   -117.02491 
+    5200    608.05503    226.36017   -819.83896 
+    5400    598.17201    222.68103   -1566.8734 
+Loop time of 6.321 on 1 procs for 1800 steps with 2881 atoms
+Setting up minimization ...
+Memory usage per processor = 4.06691 Mbytes
+Step Temp KinEng PotEng 
+    5500    615.36645    229.08199   -1926.5828 
+    5586    615.36645    229.08199   -2206.0082 
+Loop time of 0.425604 on 1 procs for 86 steps with 2881 atoms
+Setting up run ...
+Memory usage per processor = 3.38019 Mbytes
+Step Temp KinEng PotEng 
+    5500    615.36645    229.08199   -1926.5828 
+    5600    507.73152    189.01281   -762.34206 
+    5800    389.90567    145.14988   -277.78579 
+    6000    388.78568    144.73294   -160.04281 
+    6200      389.873    145.13772   -305.43767 
+    6400    397.89988    148.12588   -1536.0108 
+    6600    387.45871    144.23895   -1011.7648 
+    6800    389.78851    145.10627   -1058.9085 
+    7000    394.62249    146.90581   -1592.8812 
+    7200     389.7057    145.07544   -799.85625 
+    7300     389.9931    145.18243   -706.92061 
+Loop time of 35.294 on 1 procs for 10000 steps with 2881 atoms
+Setting up run ...
+Memory usage per processor = 3.38205 Mbytes
+Step Temp KinEng PotEng 
+    5500    396.85465    147.73677   -2910.9348 
+    5600    454.01042    169.01411   -3236.6749 
+    5800     519.8439    193.52188   -3053.3284 
+    6000    563.08653    209.61978   -2062.0589 
+    6200    576.77515    214.71563   -2082.9678 
+    6400    634.37727    236.15913   -1359.7043 
+    6600    662.20977    246.52031   -6.3104092 
+    6800    696.35074    259.22995   -218.77118 
+    7000    693.38262    258.12501   -1284.0663 
+    7200    711.68573    264.93869   -1047.3277 
+    7300    705.02352    262.45855   -221.04909 
+Loop time of 6.41463 on 1 procs for 1800 steps with 2881 atoms
+Setting up minimization ...
+Memory usage per processor = 4.07453 Mbytes
+Step Temp KinEng PotEng 
+    7300    705.02352    262.45855   -221.04909 
+    7395    705.02352    262.45855   -547.24448 
+Loop time of 0.437801 on 1 procs for 95 steps with 2881 atoms
+Setting up run ...
+Memory usage per processor = 3.38781 Mbytes
+Step Temp KinEng PotEng 
+    7300    705.02352    262.45855   -221.04909 
+Loop time of 101.483 on 1 procs for 95 steps with 2881 atoms
+
+PRD stats:
+  Dephase  time (%) = 73.7054 (72.6283)
+  Dynamics time (%) = 25.9167 (25.538)
+  Quench   time (%) = 1.72698 (1.70174)
+  Other    time (%) = -1.05113 (-1.03577)
+
+Nlocal:    2881 ave 2881 max 2881 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:    0 ave 0 max 0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:    66268 ave 66268 max 66268 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 66268
+Ave neighs/atom = 23.0017
+Neighbor list builds = 156
+Dangerous builds = 0

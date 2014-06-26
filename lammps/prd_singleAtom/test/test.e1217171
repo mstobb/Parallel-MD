@@ -1,0 +1,20 @@
+
+*********  IMPORTANT ~ Please Read  **********
+
+  On 05/20/2014 the default version of lammps 
+  changed. This module is now:
+    
+      lammps/1Feb14
+
+  Please make note of this change and update
+  your submission scripts if necessary. 
+
+  More information on these changes can be
+  found at the following URL.
+
+https://www.rcac.purdue.edu/news/detail.cfm?newsId=625
+
+  Please contact rcac-help@purdue.edu with 
+  any questions or concerns.
+
+**********************************************
