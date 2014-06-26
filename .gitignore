@@ -9,4 +9,4 @@ dump*
 log.*
 *.out
 *_out
-
+!progress_report.pdf
